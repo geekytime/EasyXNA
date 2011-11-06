@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <Asset Type="System.String[]">
+    <Item>blob/blob-0.png</Item>
+    <Item>blob/blob-1.png</Item>  
+  </Asset>
+</XnaContent>

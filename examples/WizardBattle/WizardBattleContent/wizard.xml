@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <Asset Type="System.String[]">
+    <Item>wizard/wizard-back-1.png</Item>
+    <Item>wizard/wizard-back-0.png</Item>
+    <Item>wizard/wizard-left-1.png</Item>
+    <Item>wizard/wizard-left-0.png</Item>
+    <Item>wizard/wizard-right-1.png</Item>
+    <Item>wizard/wizard-right-0.png</Item>
+    <Item>wizard/wizard-front-1.png</Item>
+    <Item>wizard/wizard-front-0.png</Item>
+  </Asset>
+</XnaContent>
