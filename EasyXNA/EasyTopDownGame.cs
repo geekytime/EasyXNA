@@ -45,13 +45,6 @@ namespace EasyXNA
         public CollisionManager CollisionManager { get; set; }
 
         /// <summary>
-        /// Sets the default font that should be used to render player data.
-        /// 
-        /// Note: This method is subject to change
-        /// </summary>
-        public string PlayerFontName { get; set; }
-
-        /// <summary>
         /// Creates an EasyTopDownGameObject
         /// </summary>
         public EasyTopDownGame()
@@ -71,10 +64,10 @@ namespace EasyXNA
         /// </summary>
         protected override void Initialize()
         {
+            base.Initialize();
             screenWidth = defaultScreenWidth;
             screenHeight = defaultScreenHeight;
 
-            base.Initialize();
             graphics.PreferredBackBufferWidth = screenWidth;
             graphics.PreferredBackBufferHeight = screenHeight;
             graphics.ApplyChanges();

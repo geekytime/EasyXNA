@@ -21,22 +21,19 @@ namespace WizardBattle
         AnimatedPlayer4DirectionGameComponent wizard1;
         AnimatedPlayer4DirectionGameComponent wizard2;
 
-        Rectangle viewableArea;
-        AnimatedRotatingEnemyComponent ghost;
+        Rectangle viewableArea;        
 
         public override void Setup()
-        {
-            PlayerFontName = "Evernight-Stargazer";
-
-            viewableArea = AddWalls(35, 65, 40, 77, "brick-0");
+        {            
+            viewableArea = AddWalls(16, 48, 27,43, "brick-0");
             this.AddBackgroundImage("tile", viewableArea);
 
             wizard1 = AddAnimatedAdventurePlayer(PlayerIndex.One, "wizard");
             wizard1.SetPosition(100, 300);
-            wizard1.DisplayData.SetPosition(35, 30);
+            wizard1.DisplayData.SetPosition(35, 10);
 
             wizard2 = AddAnimatedAdventurePlayer(PlayerIndex.Two, "wizard");
-            wizard2.DisplayData.SetPosition(1000, 30);
+            wizard2.DisplayData.SetPosition(1000, 10);
             wizard2.SetPosition(600, 300);
 
             wizard2.OverlayColor = Color.Orange;
@@ -72,8 +69,8 @@ namespace WizardBattle
         {
             for (int i = 0; i < count; i++)
             {
-                ghost = this.AddWanderingEnemy(imageName);
-                ghost.SetRandomPosition(viewableArea);
+                EasyGameComponent monster = this.AddWanderingEnemy(imageName);
+                monster.SetRandomPosition(viewableArea);
             }
             this.AddCollisionHandler("wizard", imageName, WizardMonsterCollision);
             this.AddCollisionHandler("wizard", imageName, WizardMonsterCollision);

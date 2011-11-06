@@ -8,9 +8,7 @@ using Microsoft.Xna.Framework;
 namespace EasyXNA
 {
     public abstract class DisplayData
-    {
-
-        
+    {        
         public string BackgroundImageName { get; set; }
         protected string fontName;
         protected SpriteFont spriteFont;
@@ -23,7 +21,7 @@ namespace EasyXNA
         {
             this.game = game;
             FontColor = Color.White;
-            this.FontName = game.PlayerFontName;
+            this.FontName = "Evernight-Stargazer";
             this.Scale = 1;
         }
 
