@@ -23,6 +23,7 @@ namespace EasyXNA
         Vector2 offset;
 
         protected InputHandler InputHandler { get; set; }
+        public float LayerDepth { get; set; }
 
         protected EasyTopDownGame game;
         protected String imageName;
@@ -148,7 +149,7 @@ namespace EasyXNA
             this.game = game;
             this.imageName = imageName;
             this.Category = imageName;
-            this.texture = this.game.Content.Load<Texture2D>(imageName);
+            this.texture = this.game.Content.Load<Texture2D>(imageName);            
 
             initialize();
             InitializePhysics();
@@ -169,8 +170,7 @@ namespace EasyXNA
         private void initialize()
         {
             this.AllowHorizontalMovement = true;
-            this.AllowVerticalMovement = true;
-            DrawOrder = 1;
+            this.AllowVerticalMovement = true;            
             this.OverlayColor = Color.White;
             this.Props = new CustomProperties();
         }
@@ -200,7 +200,7 @@ namespace EasyXNA
         {
             base.Draw(gameTime);
             this.game.SpriteBatch.Begin();
-            this.game.SpriteBatch.Draw(texture, DisplayPosition, null, OverlayColor, Body.Rotation, offset, 1, SpriteEffects.None, 0f);
+            this.game.SpriteBatch.Draw(texture, DisplayPosition, null, OverlayColor, Body.Rotation, offset, 1, SpriteEffects.None, LayerDepth);
             DrawDisplayData();
             this.game.SpriteBatch.End();
         }

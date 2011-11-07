@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <Asset Type="System.String[]">
+    <Item>zap/zap-0.png</Item>
+    <Item>zap/zap-1.png</Item>
+    <Item>zap/zap-2.png</Item>
+    <Item>zap/zap-3.png</Item>
+  </Asset>
+</XnaContent>

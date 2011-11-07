@@ -25,6 +25,7 @@ namespace EasyXNA
             base.InputHandler = new InputHandler(playerIndex);
             base.currentAnimationFrame = 0;
             base.DisplayData = new PlayerDisplayData(game, playerIndex);
+            base.LayerDepth = .1f;
         }
 
 

@@ -111,6 +111,7 @@
     <Compile Include="ComponentRegistry.cs" />
     <Compile Include="ConvertUnits.cs" />
     <Compile Include="CustomProperties.cs" />
+    <Compile Include="EffectGameComponent.cs" />
     <Compile Include="InputHandler.cs" />
     <Compile Include="PhysicsFrame.cs" />
     <Compile Include="ConsumableGameComponent.cs" />

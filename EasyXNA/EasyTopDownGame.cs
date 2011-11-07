@@ -242,6 +242,14 @@ namespace EasyXNA
             return animatedAdventurePlayerGameComponent;
         }
 
+        public EffectGameComponent AddEffect(String sheetName, Vector2 position)
+        {
+            EffectGameComponent effect = new EffectGameComponent(this, sheetName);
+            effect.Position = position;
+            Components.Add(effect);
+            return effect;
+        }
+
         /// <summary>
         /// Removes the specified Component from the game
         /// </summary>

@@ -51,12 +51,14 @@ namespace WizardBattle
         {
             ((AnimatedPlayer4DirectionGameComponent)wizard).PlayerDisplayData.Score++;
             ruby.Remove();
+            AddEffect("zap", ruby.DisplayPosition);
             AddRuby();            
         }
 
         public void WizardMonsterCollision(EasyGameComponent wizard, EasyGameComponent monster)
         {
             wizard.Remove();
+            AddEffect("colorexplosion", wizard.DisplayPosition);
         }
 
         public void AddRuby()

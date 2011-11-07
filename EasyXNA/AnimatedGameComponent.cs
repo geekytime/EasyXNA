@@ -12,7 +12,7 @@ namespace EasyXNA
 {
     public class AnimatedGameComponent : EasyGameComponent
     {
-        SpriteSheet spriteSheet;        
+        protected SpriteSheet spriteSheet;        
         protected int framesPerDirection = 2;
         protected int currentAnimationFrame = 0;
 
