@@ -17,7 +17,7 @@ namespace EasyXNA
         protected int currentAnimationFrame = 0;
 
         protected double lastFrameChange = 0;
-        protected double secondsPerFrame = .2;
+        public double SecondsPerFrame { get; set; }
         List<PhysicsFrame> frames;
         int lastIndex = -1;
         
@@ -25,8 +25,9 @@ namespace EasyXNA
             : base(game)
         {
             base.imageName = sheetName;
-            this.Category = sheetName; 
-           
+            this.Category = sheetName;
+
+            this.SecondsPerFrame = .2;
             spriteSheet = game.Content.Load<SpriteSheet>(sheetName);
             Initialize();
             InitializePhysics();
@@ -72,7 +73,6 @@ namespace EasyXNA
             PhysicsFrame currentFrame = getCurrentPhysicsFrame();
             Rectangle sourceRectangle = GetCurrentFrameRectangle();
             this.game.SpriteBatch.Draw(spriteSheet.Texture, DisplayPosition, sourceRectangle, OverlayColor, Body.Rotation, currentFrame.Offset, 1, SpriteEffects.None, 0f);
-            DrawDisplayData();
             this.game.SpriteBatch.End();
         }
 
@@ -103,7 +103,7 @@ namespace EasyXNA
         /// <returns></returns>
         protected virtual int ClickAnimationFrame(GameTime gameTime)
         {
-            if (gameTime.TotalGameTime.TotalSeconds - lastFrameChange > secondsPerFrame)
+            if (gameTime.TotalGameTime.TotalSeconds - lastFrameChange > SecondsPerFrame)
             {
                 lastFrameChange = gameTime.TotalGameTime.TotalSeconds;
                 if (currentAnimationFrame + 1 < framesPerDirection)

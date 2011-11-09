@@ -51,11 +51,6 @@ namespace EasyXNA
         public Color OverlayColor { get; set; }
 
         /// <summary>
-        /// An optional DisplayData instance that can be used to render component metadata to the screen.
-        /// </summary>
-        public DisplayData DisplayData { get; set; }
-
-        /// <summary>
         /// Changes the position of the physics object in the simulator.  Don't mess with this unless you know what you're doing. :)
         /// </summary>
         public Vector2 SimPosition
@@ -201,20 +196,10 @@ namespace EasyXNA
             base.Draw(gameTime);
             this.game.SpriteBatch.Begin();
             this.game.SpriteBatch.Draw(texture, DisplayPosition, null, OverlayColor, Body.Rotation, offset, 1, SpriteEffects.None, LayerDepth);
-            DrawDisplayData();
             this.game.SpriteBatch.End();
         }
 
-        /// <summary>
-        /// Draws the DisplayData object associated with this component, if any.
-        /// </summary>
-        public void DrawDisplayData()
-        {
-            if (DisplayData != null)
-            {
-                DisplayData.Draw(game.SpriteBatch);
-            }
-        }
+
 
         /// <summary>
         /// Sets the display position of this component in pixels.

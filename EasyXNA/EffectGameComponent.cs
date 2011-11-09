@@ -12,7 +12,7 @@ namespace EasyXNA
     {
         SpriteSheet SpriteSheet { get; set; }
         String ImagePrefix {get;set;}
-        protected double SecondsPerFrame {get;set;}
+        public double SecondsPerFrame {get;set;}        
         protected EasyTopDownGame game;
         public int CurrentFrame { get; set; }
         public int MaxLoops { get; set; }

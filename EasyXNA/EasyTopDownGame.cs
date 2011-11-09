@@ -166,7 +166,7 @@ namespace EasyXNA
         /// <param name="columns">The number of "bricks" to draw across the left and right sides of the box</param>
         /// <param name="imageName">The image to draw</param>
         /// <returns>A Rectangle that represents the "inner bounds" of the box created</returns>
-        public Rectangle AddWalls(int startX, int startY, int rows, int columns, string imageName)
+        public Rectangle AddWalls(int startX, int startY, int rows, int columns, params string[] imageNames)
         {
             EasyGameComponent firstWall = null;
             EasyGameComponent lastWall = null;
@@ -176,6 +176,7 @@ namespace EasyXNA
                 {
                     for (int col = 0; col < columns; col++)
                     {
+                        string imageName = RandomHelper.PickOne(imageNames);
                         EasyGameComponent wall = AddWall(startX, startY, row, col, imageName);
                         if (row == 0 && col == 0)
                         {
@@ -191,6 +192,7 @@ namespace EasyXNA
                 {
                     for (int col = 0; col < columns; col = col + columns - 1)
                     {
+                        string imageName = RandomHelper.PickOne(imageNames);
                         AddWall(startX, startY, row, col, imageName);
 
                     }
@@ -220,9 +222,9 @@ namespace EasyXNA
         /// <param name="playerIndex">The player index to check for input, used for both GamePad and Keyboard input</param>
         /// <param name="imageName">This should point to an XML sprite-sheet.  TODO:Link to SpriteSheet example</param>
         /// <returns>An AnimatedPlayer4DirectionGameComponent</returns>
-        public AnimatedPlayer4DirectionGameComponent AddAnimatedAdventurePlayer(PlayerIndex playerIndex, String imageName)
+        public FourDirectionPlayerComponent AddFourDirectionPlayer(PlayerIndex playerIndex, String imageName)
         {
-            AnimatedPlayer4DirectionGameComponent animatedAdventurePlayerGameComponent = new AnimatedPlayer4DirectionGameComponent(this, imageName, playerIndex);
+            FourDirectionPlayerComponent animatedAdventurePlayerGameComponent = new FourDirectionPlayerComponent(this, imageName, playerIndex);
             AddComponent(animatedAdventurePlayerGameComponent);
             return animatedAdventurePlayerGameComponent;
         }
@@ -234,9 +236,9 @@ namespace EasyXNA
         /// <param name="imageName">This should point to an XML sprite-sheet.  TODO:Link to SpriteSheet example</param>
         /// <param name="category">Use this to add a second player with different collision rules.</param>
         /// <returns></returns>
-        public AnimatedPlayer4DirectionGameComponent AddAnimatedAdventurePlayer(PlayerIndex playerIndex, String imageName, String category)
+        public FourDirectionPlayerComponent AddFourDirectionPlayer(PlayerIndex playerIndex, String imageName, String category)
         {
-            AnimatedPlayer4DirectionGameComponent animatedAdventurePlayerGameComponent = new AnimatedPlayer4DirectionGameComponent(this, imageName, playerIndex);
+            FourDirectionPlayerComponent animatedAdventurePlayerGameComponent = new FourDirectionPlayerComponent(this, imageName, playerIndex);
             animatedAdventurePlayerGameComponent.Category = category;
             AddComponent(animatedAdventurePlayerGameComponent);
             return animatedAdventurePlayerGameComponent;
@@ -248,6 +250,21 @@ namespace EasyXNA
             effect.Position = position;
             Components.Add(effect);
             return effect;
+        }
+
+        public EffectGameComponent AddEffect(String sheetName, Vector2 position, double secondsPerFrame, int maxLoops)
+        {
+            EffectGameComponent effect = AddEffect(sheetName, position);
+            effect.SecondsPerFrame = secondsPerFrame;
+            effect.MaxLoops = maxLoops;
+            return effect;
+        }
+
+        public PlayerDisplayData AddPlayerDisplayData(PlayerIndex playerIndex, String fontName)
+        {
+            PlayerDisplayData playerDisplayData = new PlayerDisplayData(this, playerIndex, fontName);
+            Components.Add(playerDisplayData);
+            return playerDisplayData;
         }
 
         /// <summary>
@@ -264,11 +281,11 @@ namespace EasyXNA
         /// </summary>
         /// <param name="imageName">The image to use for the wandering enemy.  This should be a an XML Sprite sheet</param>
         /// <returns>An animated rotating enemy component.</returns>
-        public AnimatedRotatingEnemyComponent AddWanderingEnemy(String imageName)
+        public RotatingWanderingComponent AddRotatingWanderingComponent(String imageName)
         {
-            AnimatedRotatingEnemyComponent wanderingEnemyGameComponent = new AnimatedRotatingEnemyComponent(this, imageName);
-            AddComponent(wanderingEnemyGameComponent);
-            return wanderingEnemyGameComponent;
+            RotatingWanderingComponent rotatingWanderingComponent = new RotatingWanderingComponent(this, imageName);
+            AddComponent(rotatingWanderingComponent);
+            return rotatingWanderingComponent;
         }
 
         /// <summary>

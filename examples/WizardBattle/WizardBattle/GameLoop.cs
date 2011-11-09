@@ -18,8 +18,10 @@ namespace WizardBattle
     public class GameLoop : EasyTopDownGame
     {
         EasyGameComponent ruby;
-        AnimatedPlayer4DirectionGameComponent wizard1;
-        AnimatedPlayer4DirectionGameComponent wizard2;
+        FourDirectionPlayerComponent wizard1;
+        FourDirectionPlayerComponent wizard2;
+
+        PlayerDisplayData display1;
 
         Rectangle viewableArea;        
 
@@ -28,12 +30,13 @@ namespace WizardBattle
             viewableArea = AddWalls(16, 48, 27,43, "brick-0");
             this.AddBackgroundImage("tile", viewableArea);
 
-            wizard1 = AddAnimatedAdventurePlayer(PlayerIndex.One, "wizard");
+            wizard1 = AddFourDirectionPlayer(PlayerIndex.One, "wizard");
             wizard1.SetPosition(100, 300);
-            wizard1.DisplayData.SetPosition(35, 10);
 
-            wizard2 = AddAnimatedAdventurePlayer(PlayerIndex.Two, "wizard");
-            wizard2.DisplayData.SetPosition(1000, 10);
+            display1 = AddPlayerDisplayData(PlayerIndex.One, "segoe");
+            display1.SetPosition(20, 15);
+
+            wizard2 = AddFourDirectionPlayer(PlayerIndex.Two, "wizard");
             wizard2.SetPosition(600, 300);
 
             wizard2.OverlayColor = Color.Orange;
@@ -49,15 +52,16 @@ namespace WizardBattle
 
         public void WizardRubyCollision(EasyGameComponent wizard, EasyGameComponent ruby)
         {
-            ((AnimatedPlayer4DirectionGameComponent)wizard).PlayerDisplayData.Score++;
             ruby.Remove();
-            AddEffect("zap", ruby.DisplayPosition);
+            EffectGameComponent effect = AddEffect("zap", ruby.DisplayPosition);
+            display1.Score++;
             AddRuby();            
         }
 
         public void WizardMonsterCollision(EasyGameComponent wizard, EasyGameComponent monster)
         {
             wizard.Remove();
+            
             AddEffect("colorexplosion", wizard.DisplayPosition);
         }
 
@@ -71,8 +75,8 @@ namespace WizardBattle
         {
             for (int i = 0; i < count; i++)
             {
-                EasyGameComponent monster = this.AddWanderingEnemy(imageName);
-                monster.SetRandomPosition(viewableArea);
+                EasyGameComponent monster = this.AddRotatingWanderingComponent(imageName);
+                monster.SetPosition(200,200);
             }
             this.AddCollisionHandler("wizard", imageName, WizardMonsterCollision);
             this.AddCollisionHandler("wizard", imageName, WizardMonsterCollision);

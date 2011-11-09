@@ -10,15 +10,20 @@ namespace EasyXNA
         static Random random = new Random();
         public static int IntInRange(int minValue, int maxValue)
         {
-            return random.Next(minValue, maxValue);
+            return random.Next(minValue, maxValue + 1);
         }
 
         public static double DoubleInRange(double minValue, double maxValue)
         {
-            double zeroToOne = random.NextDouble();
-            //Min + (int)(Math.random() * ((Max - Min) + 1))
+            double zeroToOne = random.NextDouble();            
             double inRange = minValue + (zeroToOne * ((maxValue - minValue)));
             return inRange;
+        }
+
+        internal static string PickOne(string[] items)
+        {
+            int index = IntInRange(0, items.Length - 1);
+            return items[index];
         }
     }
 }

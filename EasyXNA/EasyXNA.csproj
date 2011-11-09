@@ -102,9 +102,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnimatedPlayer4DirectionGameComponent.cs" />
+    <Compile Include="FourDirectionPlayerComponent.cs" />
     <Compile Include="AnimatedGameComponent.cs" />
-    <Compile Include="AnimatedRotatingEnemyComponent.cs" />
+    <Compile Include="RotatingWanderingComponent.cs" />
     <Compile Include="AnimatedRotatingGameComponent.cs" />
     <Compile Include="BackgroundGameComponent.cs" />
     <Compile Include="CollisionManager.cs" />
@@ -122,6 +122,7 @@
     <Compile Include="PlayerDisplayData.cs" />
     <Compile Include="RandomHelper.cs" />
     <Compile Include="Room.cs" />
+    <Compile Include="RotatingPlayerComponent.cs" />
     <Compile Include="WanderingEnemyGameComponent.cs" />
     <Compile Include="PlayerGameComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

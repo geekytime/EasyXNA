@@ -12,18 +12,21 @@ namespace EasyXNA
         public string Name { get; set; }
         public int Score { get; set; }
 
-        public PlayerDisplayData(EasyTopDownGame game, PlayerIndex playerIndex) :base(game)
+        public PlayerDisplayData(EasyTopDownGame game, PlayerIndex playerIndex, string fontName) :base(game, fontName)
         {
             Name = "Player " + playerIndex.ToString();
             Score = 0;
-            Scale = 1.3f;
+            Scale = 1.0f;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime)
         {
+            base.Draw(gameTime);
             String displayData = Name + " : " + Score.ToString();
-            Vector2 FontOrigin = spriteFont.MeasureString(displayData) / 2;            
-            spriteBatch.DrawString(spriteFont, displayData, Position, FontColor,0,Vector2.Zero, Scale,SpriteEffects.None, 0);
+            Vector2 FontOrigin = spriteFont.MeasureString(displayData) / 2;
+            game.SpriteBatch.Begin();
+            game.SpriteBatch.DrawString(spriteFont, displayData, Position, FontColor, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
+            game.SpriteBatch.End();
         }
     }
 }

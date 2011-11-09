@@ -12,7 +12,7 @@ namespace EasyXNA
         public void setValue(string name, object value)
         {
             props[name] = value;
-        }
+        }        
 
         public object getValue(string name)
         {
