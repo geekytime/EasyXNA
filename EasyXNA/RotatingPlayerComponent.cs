@@ -16,8 +16,7 @@ namespace EasyXNA
             base.Acceleration = 6;
             base.MaxVelocity = PlayerGameComponent.DEFAULT_PLAYER_MAX_VELOCITY;
             base.InputHandler = new InputHandler(playerIndex);
-            base.currentAnimationFrame = 0;
-            base.LayerDepth = .1f;
+            base.currentAnimationFrame = 0;            
         }
 
         public override void Update(GameTime gameTime)

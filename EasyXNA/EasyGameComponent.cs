@@ -22,7 +22,8 @@ namespace EasyXNA
         public Body Body { get; set; }
         Vector2 offset;
 
-        protected InputHandler InputHandler { get; set; }
+        protected InputHandler InputHandler { get; set; }        
+        public float Scale { get; set; }
         public float LayerDepth { get; set; }
 
         protected EasyTopDownGame game;
@@ -145,7 +146,6 @@ namespace EasyXNA
             this.imageName = imageName;
             this.Category = imageName;
             this.texture = this.game.Content.Load<Texture2D>(imageName);            
-
             initialize();
             InitializePhysics();
         }
@@ -158,8 +158,8 @@ namespace EasyXNA
             : base(game)
         {
             this.game = game;
+            
             initialize();
-
         }
 
         private void initialize()
@@ -168,6 +168,8 @@ namespace EasyXNA
             this.AllowVerticalMovement = true;            
             this.OverlayColor = Color.White;
             this.Props = new CustomProperties();
+            LayerDepth = LayerDepths.Middle;
+            Scale = 1;
         }
 
         /// <summary>
@@ -192,11 +194,8 @@ namespace EasyXNA
         /// </summary>
         /// <param name="gameTime">Current GameTime.  Needed by XNA.</param>
         public override void Draw(GameTime gameTime)
-        {
-            base.Draw(gameTime);
-            this.game.SpriteBatch.Begin();
-            this.game.SpriteBatch.Draw(texture, DisplayPosition, null, OverlayColor, Body.Rotation, offset, 1, SpriteEffects.None, LayerDepth);
-            this.game.SpriteBatch.End();
+        {                       
+            game.SpriteBatch.Draw(texture, DisplayPosition, null, OverlayColor, Body.Rotation, offset, Scale, SpriteEffects.None, LayerDepth);            
         }
 
 
@@ -236,6 +235,31 @@ namespace EasyXNA
                 IsRemoved = true;
             }
         }
+
+        public bool Enabled
+        {
+            get
+            {
+                return !IsRemoved;
+            }
+            set
+            {
+                if (value == false)
+                {
+                    Remove();
+                }
+                else
+                {
+                    if (IsRemoved == true)
+                    {
+                        game.Components.Add(this);
+                        game.Physics.BodyList.Add(this.Body);
+                        IsRemoved = false;
+                    }
+                }
+            }
+        }
+
 
         /// <summary>
         /// Had a few issues with Remove() being called multiple times per frame, which was goofing up the Physics.  This is a hack to avoid that problem. :(        

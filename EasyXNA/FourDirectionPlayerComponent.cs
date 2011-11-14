@@ -14,6 +14,8 @@ namespace EasyXNA
         PlayerIndex playerIndex;
         protected AnimatedGameComponentDirection lastDirection = AnimatedGameComponentDirection.Front;
         protected AnimatedGameComponentDirection direction = AnimatedGameComponentDirection.Front;        
+        public PlayerScoreDisplay PlayerDisplayData {get; set;}
+
 
         public FourDirectionPlayerComponent(EasyTopDownGame easyGame, String imageName, PlayerIndex playerIndex)
             : base(easyGame, imageName)
@@ -22,8 +24,7 @@ namespace EasyXNA
             base.Acceleration = 6;
             base.MaxVelocity = PlayerGameComponent.DEFAULT_PLAYER_MAX_VELOCITY;
             base.InputHandler = new InputHandler(playerIndex);
-            base.currentAnimationFrame = 0;
-            base.LayerDepth = .1f;
+            base.currentAnimationFrame = 0;            
         }
 
 

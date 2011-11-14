@@ -16,13 +16,14 @@ namespace EasyXNA
         private int tileRows;
         private int tileCols;
         private Vector2 scalingFactor;
+        public float LayerDepth { get; set; }
 
         public BackgroundGameComponent(EasyTopDownGame game, string imageName, Rectangle tileArea) : base(game)
         {
             this.game = game;
             this.imageName = imageName;
             this.tileArea = tileArea;
-            this.DrawOrder = 0;
+            this.LayerDepth = LayerDepths.Background;
             texture = game.Content.Load<Texture2D>(imageName);
             CalculateScalingFactor();
             
@@ -39,8 +40,7 @@ namespace EasyXNA
         }
 
         public override void Draw(GameTime gameTime)
-        {
-            game.SpriteBatch.Begin();
+        {                        
             for (int row = 0; row < tileRows; row++)
             {
                 for(int col = 0; col<tileCols; col++)
@@ -48,10 +48,9 @@ namespace EasyXNA
                     float x = tileArea.Left + ((col * texture.Width) * scalingFactor.X);
                     float y = tileArea.Top + ((row * texture.Height) * scalingFactor.Y);
                     Vector2 position = new Vector2(x,y);
-                    game.SpriteBatch.Draw(texture,position, null, Color.White,0, Vector2.Zero, scalingFactor, SpriteEffects.None, 1);
+                    game.SpriteBatch.Draw(texture,position, null, Color.White,0, Vector2.Zero, scalingFactor, SpriteEffects.None, LayerDepth);
                 }
-            }            
-            game.SpriteBatch.End();
+            }                        
         }
     }
 }

@@ -26,11 +26,12 @@ namespace EasyXNA
         {
             base.imageName = sheetName;
             this.Category = sheetName;
-
+            LayerDepth = LayerDepths.Middle;
             this.SecondsPerFrame = .2;
             spriteSheet = game.Content.Load<SpriteSheet>(sheetName);
             Initialize();
             InitializePhysics();
+            Scale = 1;
         }
 
         public override void InitializePhysics()
@@ -68,12 +69,10 @@ namespace EasyXNA
         }
 
         public override void Draw(GameTime gameTime)
-        {
-            game.SpriteBatch.Begin();
+        {            
             PhysicsFrame currentFrame = getCurrentPhysicsFrame();
             Rectangle sourceRectangle = GetCurrentFrameRectangle();
-            this.game.SpriteBatch.Draw(spriteSheet.Texture, DisplayPosition, sourceRectangle, OverlayColor, Body.Rotation, currentFrame.Offset, 1, SpriteEffects.None, 0f);
-            this.game.SpriteBatch.End();
+            this.game.SpriteBatch.Draw(spriteSheet.Texture, DisplayPosition, sourceRectangle, OverlayColor, Body.Rotation, currentFrame.Offset, Scale, SpriteEffects.None, LayerDepth);
         }
 
         protected int GetCurrentFrameIndex()

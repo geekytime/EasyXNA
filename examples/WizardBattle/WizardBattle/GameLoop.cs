@@ -21,23 +21,28 @@ namespace WizardBattle
         FourDirectionPlayerComponent wizard1;
         FourDirectionPlayerComponent wizard2;
 
-        PlayerDisplayData display1;
+        PlayerScoreDisplay display1;
+        PlayerScoreDisplay display2;
 
         Rectangle viewableArea;        
 
         public override void Setup()
         {            
             viewableArea = AddWalls(16, 48, 27,43, "brick-0");
-            this.AddBackgroundImage("tile", viewableArea);
+
+            
 
             wizard1 = AddFourDirectionPlayer(PlayerIndex.One, "wizard");
             wizard1.SetPosition(100, 300);
 
-            display1 = AddPlayerDisplayData(PlayerIndex.One, "segoe");
+            display1 = AddPlayerScoreDisplay(PlayerIndex.One, "segoe");
             display1.SetPosition(20, 15);
 
             wizard2 = AddFourDirectionPlayer(PlayerIndex.Two, "wizard");
             wizard2.SetPosition(600, 300);
+
+            display2 = AddPlayerScoreDisplay(PlayerIndex.Two, "segoe");
+            display2.SetPosition(420, 15);
 
             wizard2.OverlayColor = Color.Orange;
 
@@ -47,15 +52,17 @@ namespace WizardBattle
      
             AddRuby();
  
-            AddCollisionHandler("wizard", "ruby", WizardRubyCollision);                                    
+            AddCollisionHandler("wizard", "ruby", WizardRubyCollision);
+            this.AddBackgroundImage("tile", viewableArea);
         }        
 
         public void WizardRubyCollision(EasyGameComponent wizard, EasyGameComponent ruby)
         {
-            ruby.Remove();
             EffectGameComponent effect = AddEffect("zap", ruby.DisplayPosition);
             display1.Score++;
-            AddRuby();            
+            ruby.Remove();            
+            AddRuby();
+
         }
 
         public void WizardMonsterCollision(EasyGameComponent wizard, EasyGameComponent monster)
@@ -63,6 +70,9 @@ namespace WizardBattle
             wizard.Remove();
             
             AddEffect("colorexplosion", wizard.DisplayPosition);
+            TextEffect textEffect = AddTextEffect("test", "U R D3@D!!!", wizard.DisplayPosition, Color.Red);
+            textEffect.SecondsToLive = 1;
+            textEffect.MakeFlashingText(Color.WhiteSmoke, .05);
         }
 
         public void AddRuby()

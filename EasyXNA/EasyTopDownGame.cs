@@ -130,7 +130,16 @@ namespace EasyXNA
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.DarkGray);
-            base.Draw(gameTime);
+      
+            spriteBatch.Begin(SpriteSortMode.BackToFront,null);
+            foreach (GameComponent component in Components)
+            {
+                if (component is DrawableGameComponent)
+                {
+                    ((DrawableGameComponent)component).Draw(gameTime);
+                }
+            }
+            spriteBatch.End();            
         }
 
         /// <summary>
@@ -260,18 +269,56 @@ namespace EasyXNA
             return effect;
         }
 
-        public PlayerDisplayData AddPlayerDisplayData(PlayerIndex playerIndex, String fontName)
+        /// <summary>
+        /// PlayerDisplayData provides a basic text for a player's number and score - "Player 1 - Score: 0"
+        /// </summary>
+        /// <param name="playerIndex">Which player is this data for?</param>
+        /// <param name="fontName">Which font name to use.  You must have a corresponding spritefont in your content project.</param>
+        /// <returns>A PlayerDisplayData object with the default configuration.</returns>
+        public PlayerScoreDisplay AddPlayerScoreDisplay(PlayerIndex playerIndex, String fontName)
         {
-            PlayerDisplayData playerDisplayData = new PlayerDisplayData(this, playerIndex, fontName);
-            Components.Add(playerDisplayData);
-            return playerDisplayData;
+            PlayerScoreDisplay playerScoreDisplay = new PlayerScoreDisplay(this, playerIndex, fontName);
+            Components.Add(playerScoreDisplay);
+            return playerScoreDisplay;
         }
+
+        /// <summary>
+        /// Adds a TextEffect to the screen with the given message.
+        /// Make sure to set the position and seconds to live for text effects
+        /// </summary>
+        /// <param name="fontName">Which font name to use.  You must have a corresponding spritefont in your content project.</param>
+        /// <param name="message">The message to display.</param>
+        /// <returns>A PlayerDisplayData object with the default configuration.</returns>
+        public TextEffect AddTextEffect(string fontName, string message)
+        {
+            TextEffect textEffect = new TextEffect(this, fontName, message);
+            Components.Add(textEffect);
+            return textEffect;
+        }
+
+        /// <summary>
+        /// Adds a text effect to the screen with the given message, position, and color.
+        /// </summary>
+        /// <param name="fontName">Which font name to use.  You must have a corresponding spritefont in your content project.</param>
+        /// <param name="message">The message to display.</param>
+        /// <param name="position">Where to display the message.</param>
+        /// <param name="fontColor">The color to use when drawing the font.</param>
+        /// <returns></returns>
+        public TextEffect AddTextEffect(string fontName, string message, Vector2 position, Color fontColor)
+        {
+            TextEffect textEffect = new TextEffect(this, fontName, message);
+            textEffect.Position = position;
+            textEffect.FontColor = fontColor;
+            Components.Add(textEffect);
+            return textEffect;
+        }
+
 
         /// <summary>
         /// Removes the specified Component from the game
         /// </summary>
         /// <param name="component">The component to Remove</param>
-        public void RemoveComponent(EasyGameComponent component)
+        public void RemoveComponent(DrawableGameComponent component)
         {
             this.Components.Remove(component);
         }

@@ -38,7 +38,7 @@ namespace EasyXNA
             OverlayColor = Color.White;
             Rotation = 0;
             Scale = 1;
-            LayerDepth = 0;
+            LayerDepth = LayerDepths.Front;
         }        
 
         public Vector2 Position
@@ -71,11 +71,8 @@ namespace EasyXNA
             int offsetX = sourceRectangle.Width /2;
             int offsetY = sourceRectangle.Height /2;
             Vector2 offset = new Vector2(offsetX, offsetY);
-
-            game.SpriteBatch.Begin();
-            game.SpriteBatch.Draw(SpriteSheet.Texture, position, sourceRectangle, OverlayColor, Rotation, offset, Scale,  SpriteEffects.None, LayerDepth);
-            game.SpriteBatch.End();
-            base.Draw(gameTime);
+            
+            game.SpriteBatch.Draw(SpriteSheet.Texture, position, sourceRectangle, OverlayColor, Rotation, offset, Scale,  SpriteEffects.None, LayerDepth);                        
         }
 
         public override void Update(GameTime gameTime)

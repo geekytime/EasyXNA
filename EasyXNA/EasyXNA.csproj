@@ -104,6 +104,7 @@
   <ItemGroup>
     <Compile Include="FourDirectionPlayerComponent.cs" />
     <Compile Include="AnimatedGameComponent.cs" />
+    <Compile Include="LayerDepths.cs" />
     <Compile Include="RotatingWanderingComponent.cs" />
     <Compile Include="AnimatedRotatingGameComponent.cs" />
     <Compile Include="BackgroundGameComponent.cs" />
@@ -118,8 +119,8 @@
     <Compile Include="EasyTopDownGame.cs" />
     <Compile Include="EasyGameComponent.cs" />
     <Compile Include="PhysicsHelper.cs" />
-    <Compile Include="DisplayData.cs" />
-    <Compile Include="PlayerDisplayData.cs" />
+    <Compile Include="TextEffect.cs" />
+    <Compile Include="PlayerScoreDisplay.cs" />
     <Compile Include="RandomHelper.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="RotatingPlayerComponent.cs" />
