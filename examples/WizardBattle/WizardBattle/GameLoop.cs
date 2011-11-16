@@ -31,14 +31,14 @@ namespace WizardBattle
         {            
             viewableArea = AddWalls(16, 48, 27,43, "brick");
 
-            
-            wizard1 = AddFourDirectionPlayer(PlayerIndex.One, "wizard");
-            wizard1.SetPosition(100, 300);
+
+            AddWizard1();
 
             display1 = AddPlayerScoreDisplay(PlayerIndex.One, "segoe");
             display1.SetPosition(20, 15);
 
             wizard2 = AddFourDirectionPlayer(PlayerIndex.Two, "wizard");
+            wizard2.Category = "wizard2";
             wizard2.SetPosition(600, 300);
             wizard2.OverlayColor = Color.Orange;
 
@@ -64,6 +64,12 @@ namespace WizardBattle
             AddCollisionHandler("wizard", "monster", WizardMonsterCollision);            
         }
 
+        public void AddWizard1()
+        {
+            wizard1 = AddFourDirectionPlayer(PlayerIndex.One, "wizard");
+            wizard1.SetPosition(100, 300);
+        }
+
         public void AddRandomMonster()
         {
             if (newMonsterCount < 10)
@@ -76,18 +82,14 @@ namespace WizardBattle
 
         public void PlayerOneFireball()
         {
-            if (wizard1.IsRemoved == false)
-            {
-                ProjectileComponent fireball = AddProjectile(wizard1, "magicball", wizard1.GetProjectileDirection(), 1);
-                fireball.Scale = 2;
-            }
+            AddProjectile(wizard1, "magicball", 1);
         }
 
         public void PlayerTwoFireball()
         {
             if (wizard2.IsRemoved == false)
             {
-                AddProjectile(wizard2, "magicball", wizard2.GetProjectileDirection(), 1);
+                AddProjectile(wizard2, "magicball", 1);
             }
         }
 
@@ -98,6 +100,7 @@ namespace WizardBattle
 
         public void FireballMonsterCollision(EasyGameComponent fireball, EasyGameComponent monster)
         {
+            AddEffect("colorexplosion", monster.DisplayPosition);
             monster.Remove();
             fireball.Remove();
         }
@@ -118,6 +121,7 @@ namespace WizardBattle
             TextEffect textEffect = AddTextEffect("segoe", "U R D3@D!!!", wizard.DisplayPosition, Color.Red);
             textEffect.SecondsToLive = 1;
             textEffect.MakeFlashingText(Color.WhiteSmoke, .05);
+            AddTimedEvent(3, AddWizard1, 1);
         }
 
         public void AddRuby()

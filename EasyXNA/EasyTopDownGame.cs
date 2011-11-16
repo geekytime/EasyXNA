@@ -158,7 +158,12 @@ namespace EasyXNA
 
         public void AddTimedEvent(double interval, Action callback)
         {
-            TimedEventComponent timedEvent = new TimedEventComponent(this, interval, callback);
+            AddTimedEvent(interval, callback, -1);
+        }
+
+        public void AddTimedEvent(double interval, Action callback, int maxCount)
+        {
+            TimedEventComponent timedEvent = new TimedEventComponent(this, interval, callback, maxCount);
             Components.Add(timedEvent);
         }
 
@@ -282,12 +287,14 @@ namespace EasyXNA
             Components.Add(inputHandlerComponent);
         }
 
-        public ProjectileComponent AddProjectile(EasyGameComponent component, string sheetName, Vector2 direction, float acceleration)
+        public ProjectileComponent AddProjectile(FourDirectionPlayerComponent component, string sheetName, float acceleration)
         {
+            Vector2 direction = component.GetProjectileDirection();
             ProjectileComponent projectile = new ProjectileComponent(this, component, sheetName, direction, acceleration);
             Components.Add(projectile);
             return projectile;
         }
+
 
         /// <summary>
         /// PlayerDisplayData provides a basic text for a player's number and score - "Player 1 - Score: 0"
