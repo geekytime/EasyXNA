@@ -20,10 +20,11 @@ namespace EasyXNA
             return inRange;
         }
 
-        internal static string PickOne(string[] items)
+        public static string PickOne(params string[] items)
         {
             int index = IntInRange(0, items.Length - 1);
             return items[index];
         }
+
     }
 }

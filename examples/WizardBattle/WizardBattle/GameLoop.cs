@@ -24,7 +24,8 @@ namespace WizardBattle
         PlayerScoreDisplay display1;
         PlayerScoreDisplay display2;
 
-        Rectangle viewableArea;        
+        Rectangle viewableArea;
+        int newMonsterCount = 0;
 
         public override void Setup()
         {            
@@ -46,7 +47,9 @@ namespace WizardBattle
           
             AddMonsters("blob", 2);
             AddMonsters("ghost", 2);
-            AddMonsters("ogre", 2);            
+            AddMonsters("ogre", 2);
+
+            AddTimedEvent(3, AddRandomMonster);
      
             AddRuby();
  
@@ -58,16 +61,34 @@ namespace WizardBattle
 
             AddCollisionHandler("magicball", "brick", FireballBrickCollision);
             AddCollisionHandler("magicball", "monster", FireballMonsterCollision);
+            AddCollisionHandler("wizard", "monster", WizardMonsterCollision);            
+        }
+
+        public void AddRandomMonster()
+        {
+            if (newMonsterCount < 10)
+            {
+                newMonsterCount++;
+                string monsterName = RandomHelper.PickOne("blob", "ghost", "ogre");
+                AddMonsters(monsterName, newMonsterCount);
+            }
         }
 
         public void PlayerOneFireball()
         {
-            AddProjectile(wizard1, "magicball", wizard1.GetProjectileDirection(), 1);
+            if (wizard1.IsRemoved == false)
+            {
+                ProjectileComponent fireball = AddProjectile(wizard1, "magicball", wizard1.GetProjectileDirection(), 1);
+                fireball.Scale = 2;
+            }
         }
 
         public void PlayerTwoFireball()
         {
-            AddProjectile(wizard2, "magicball", wizard2.GetProjectileDirection(), 1);
+            if (wizard2.IsRemoved == false)
+            {
+                AddProjectile(wizard2, "magicball", wizard2.GetProjectileDirection(), 1);
+            }
         }
 
         public void FireballBrickCollision(EasyGameComponent fireball, EasyGameComponent brick)
@@ -93,7 +114,6 @@ namespace WizardBattle
         public void WizardMonsterCollision(EasyGameComponent wizard, EasyGameComponent monster)
         {
             wizard.Remove();
-            
             AddEffect("colorexplosion", wizard.DisplayPosition);
             TextEffect textEffect = AddTextEffect("segoe", "U R D3@D!!!", wizard.DisplayPosition, Color.Red);
             textEffect.SecondsToLive = 1;
@@ -112,9 +132,9 @@ namespace WizardBattle
             {
                 EasyGameComponent monster = this.AddRotatingWanderingComponent(imageName);
                 monster.Category = "monster";
-                monster.SetPosition(200,200);
+                monster.SetRandomPosition(viewableArea);
             }
-            this.AddCollisionHandler("wizard", "monster", WizardMonsterCollision);            
+           
         }
     }
 }

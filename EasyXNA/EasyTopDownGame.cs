@@ -156,6 +156,12 @@ namespace EasyXNA
             return playerGameComponent;
         }
 
+        public void AddTimedEvent(double interval, Action callback)
+        {
+            TimedEventComponent timedEvent = new TimedEventComponent(this, interval, callback);
+            Components.Add(timedEvent);
+        }
+
         /// <summary>
         /// Adds a tiled background image that will be scaled to fit the given Rectangle area
         /// </summary>

@@ -128,6 +128,7 @@
     <Compile Include="RandomHelper.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="RotatingPlayerComponent.cs" />
+    <Compile Include="TimedEventComponent.cs" />
     <Compile Include="WanderingEnemyGameComponent.cs" />
     <Compile Include="PlayerGameComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
