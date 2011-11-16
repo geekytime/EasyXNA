@@ -135,12 +135,6 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
-    <Compile Include="test.spritefont">
-      <Name>test</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <SubType>Designer</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -187,13 +181,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="brick-0.png">
-      <Name>brick-0</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="brick-1.png">
-      <Name>brick-1</Name>
+    <Compile Include="brick.png">
+      <Name>brick</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -288,7 +277,18 @@
       <Processor>SpriteSheetProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="magicball\magicball-0.png">
+      <Name>magicball-0</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="magicball\magicball-1.png">
+      <Name>magicball-1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="zap\zap-0.png">
       <Name>zap-0</Name>
@@ -354,6 +354,13 @@
   <ItemGroup>
     <Compile Include="colorexplosion.xml">
       <Name>colorexplosion</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>SpriteSheetProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="magicball.xml">
+      <Name>magicball</Name>
       <Importer>XmlImporter</Importer>
       <Processor>SpriteSheetProcessor</Processor>
     </Compile>

@@ -80,5 +80,26 @@ namespace EasyXNA
             }
 
         }
+
+        public Vector2 GetProjectileDirection()
+        {
+            if (direction == AnimatedGameComponentDirection.Back)
+            {
+                return ProjectileDirections.Up;
+            }
+            else if (direction == AnimatedGameComponentDirection.Front)
+            {
+                return ProjectileDirections.Down;
+            }
+            else if (direction == AnimatedGameComponentDirection.Left)
+            {
+                return ProjectileDirections.Left;
+            }
+            else if (direction == AnimatedGameComponentDirection.Right)
+            {
+                return ProjectileDirections.Right;
+            }
+            return Vector2.Zero;
+        }
     }
 }

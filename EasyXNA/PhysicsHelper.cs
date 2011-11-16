@@ -9,6 +9,7 @@ using FarseerPhysics.Common.PolygonManipulation;
 using FarseerPhysics.Common.Decomposition;
 using SpriteSheetRuntime;
 using FarseerPhysics.Dynamics;
+using FarseerPhysics.Collision;
 
 namespace EasyXNA
 {
@@ -74,6 +75,30 @@ namespace EasyXNA
             {
                 fixture.OnCollision += game.OnFixtureCollision;
             }
+        }
+
+        public static Rectangle GetAABB(EasyGameComponent component)
+        {
+            AABB overallAABB = new AABB();
+            component.Body.FixtureList.ForEach(delegate(Fixture fixture)
+            {
+                for (int i = 0; i < fixture.Shape.ChildCount; i++)
+                {
+                    AABB currentAABB;
+                    Transform transform;
+                    fixture.Body.GetTransform(out transform);
+                    fixture.Shape.ComputeAABB(out currentAABB, ref transform, i);
+                    overallAABB.Combine(ref currentAABB);
+                }
+            });
+
+            int left = (int)overallAABB.UpperBound.X;
+            int right = (int)overallAABB.LowerBound.X;
+            int top = (int)overallAABB.UpperBound.Y;
+            int bottom = (int)overallAABB.LowerBound.Y;
+            
+            Rectangle rectangle = new Rectangle(left, top, right - left, bottom - top);            
+            return rectangle;
         }
     }
 }

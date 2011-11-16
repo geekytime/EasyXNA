@@ -120,7 +120,7 @@ namespace EasyXNA
         public override void Update(GameTime gameTime)
         {            
             base.Update(gameTime);            
-            updateEnabledFixtures();
+            updateEnabledFixtures();            
         }
 
         private void updateEnabledFixtures()
@@ -163,4 +163,6 @@ namespace EasyXNA
         Left,
         Right
     }
+
+    
 }

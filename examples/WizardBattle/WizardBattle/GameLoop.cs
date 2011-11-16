@@ -28,10 +28,9 @@ namespace WizardBattle
 
         public override void Setup()
         {            
-            viewableArea = AddWalls(16, 48, 27,43, "brick-0");
+            viewableArea = AddWalls(16, 48, 27,43, "brick");
 
             
-
             wizard1 = AddFourDirectionPlayer(PlayerIndex.One, "wizard");
             wizard1.SetPosition(100, 300);
 
@@ -40,21 +39,47 @@ namespace WizardBattle
 
             wizard2 = AddFourDirectionPlayer(PlayerIndex.Two, "wizard");
             wizard2.SetPosition(600, 300);
+            wizard2.OverlayColor = Color.Orange;
 
             display2 = AddPlayerScoreDisplay(PlayerIndex.Two, "segoe");
             display2.SetPosition(420, 15);
-
-            wizard2.OverlayColor = Color.Orange;
-
-            AddMonsters("blob", 1);
-            AddMonsters("ghost", 1);
-            AddMonsters("ogre", 1);            
+          
+            AddMonsters("blob", 2);
+            AddMonsters("ghost", 2);
+            AddMonsters("ogre", 2);            
      
             AddRuby();
  
             AddCollisionHandler("wizard", "ruby", WizardRubyCollision);
-            this.AddBackgroundImage("tile", viewableArea);
-        }        
+            AddBackgroundImage("tile", viewableArea);
+
+            AddInputHandler(PlayerOneFireball, PlayerIndex.One, Keys.RightControl, Buttons.A);
+            AddInputHandler(PlayerTwoFireball, PlayerIndex.Two, Keys.LeftControl, Buttons.A);
+
+            AddCollisionHandler("magicball", "brick", FireballBrickCollision);
+            AddCollisionHandler("magicball", "monster", FireballMonsterCollision);
+        }
+
+        public void PlayerOneFireball()
+        {
+            AddProjectile(wizard1, "magicball", wizard1.GetProjectileDirection(), 1);
+        }
+
+        public void PlayerTwoFireball()
+        {
+            AddProjectile(wizard2, "magicball", wizard2.GetProjectileDirection(), 1);
+        }
+
+        public void FireballBrickCollision(EasyGameComponent fireball, EasyGameComponent brick)
+        {
+            fireball.Remove();
+        }
+
+        public void FireballMonsterCollision(EasyGameComponent fireball, EasyGameComponent monster)
+        {
+            monster.Remove();
+            fireball.Remove();
+        }
 
         public void WizardRubyCollision(EasyGameComponent wizard, EasyGameComponent ruby)
         {
@@ -70,7 +95,7 @@ namespace WizardBattle
             wizard.Remove();
             
             AddEffect("colorexplosion", wizard.DisplayPosition);
-            TextEffect textEffect = AddTextEffect("test", "U R D3@D!!!", wizard.DisplayPosition, Color.Red);
+            TextEffect textEffect = AddTextEffect("segoe", "U R D3@D!!!", wizard.DisplayPosition, Color.Red);
             textEffect.SecondsToLive = 1;
             textEffect.MakeFlashingText(Color.WhiteSmoke, .05);
         }
@@ -86,10 +111,10 @@ namespace WizardBattle
             for (int i = 0; i < count; i++)
             {
                 EasyGameComponent monster = this.AddRotatingWanderingComponent(imageName);
+                monster.Category = "monster";
                 monster.SetPosition(200,200);
             }
-            this.AddCollisionHandler("wizard", imageName, WizardMonsterCollision);
-            this.AddCollisionHandler("wizard", imageName, WizardMonsterCollision);
+            this.AddCollisionHandler("wizard", "monster", WizardMonsterCollision);            
         }
     }
 }

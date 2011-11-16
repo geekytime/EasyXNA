@@ -133,6 +133,10 @@ namespace EasyXNA
         public float Acceleration { get; set; }
         public float MaxVelocity { get; set; }
 
+        public Rectangle GetBoundingBox()
+        {
+            return PhysicsHelper.GetAABB(this);
+        }
 
         /// <summary>
         /// Creates a new EasyGameComponent

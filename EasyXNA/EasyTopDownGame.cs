@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics;
 using FarseerPhysics.Dynamics.Contacts;
+using Microsoft.Xna.Framework.Input;
 
 namespace EasyXNA
 {
@@ -267,6 +268,19 @@ namespace EasyXNA
             effect.SecondsPerFrame = secondsPerFrame;
             effect.MaxLoops = maxLoops;
             return effect;
+        }
+
+        public void AddInputHandler(Action callback, PlayerIndex playerIndex, params object[] inputs)
+        {
+            InputHandlerComponent inputHandlerComponent = new InputHandlerComponent(this, callback, playerIndex, inputs);
+            Components.Add(inputHandlerComponent);
+        }
+
+        public ProjectileComponent AddProjectile(EasyGameComponent component, string sheetName, Vector2 direction, float acceleration)
+        {
+            ProjectileComponent projectile = new ProjectileComponent(this, component, sheetName, direction, acceleration);
+            Components.Add(projectile);
+            return projectile;
         }
 
         /// <summary>

@@ -102,9 +102,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EasyGameState.cs" />
     <Compile Include="FourDirectionPlayerComponent.cs" />
     <Compile Include="AnimatedGameComponent.cs" />
+    <Compile Include="InputHandlerComponent.cs" />
     <Compile Include="LayerDepths.cs" />
+    <Compile Include="Projectile.cs" />
+    <Compile Include="ProjectileComponent.cs" />
     <Compile Include="RotatingWanderingComponent.cs" />
     <Compile Include="AnimatedRotatingGameComponent.cs" />
     <Compile Include="BackgroundGameComponent.cs" />
