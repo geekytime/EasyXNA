@@ -27,10 +27,13 @@ namespace WizardBattle
         Rectangle viewableArea;
         int newMonsterCount = 0;
 
+        public override int ScreenHeight { get { return 720; } }
+
+        public override int ScreenWidth { get { return 1280; } }
+
         public override void Setup()
         {            
             viewableArea = AddWalls(16, 48, 27,43, "brick");
-
 
             AddWizard1();
 
@@ -72,7 +75,7 @@ namespace WizardBattle
 
         public void AddRandomMonster()
         {
-            if (newMonsterCount < 10)
+            if (newMonsterCount < 2)
             {
                 newMonsterCount++;
                 string monsterName = RandomHelper.PickOne("blob", "ghost", "ogre");

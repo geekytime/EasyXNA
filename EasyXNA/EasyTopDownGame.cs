@@ -29,8 +29,8 @@ namespace EasyXNA
         const int defaultScreenWidth = 704;
         const int defaultScreenHeight = 480;
 
-        int screenWidth;
-        int screenHeight;
+        int screenWidth = defaultScreenWidth;
+        int screenHeight = defaultScreenHeight;
 
         /// <summary>
         /// Gets the SpriteBatch used to draw images
@@ -57,6 +57,7 @@ namespace EasyXNA
             CollisionManager = new CollisionManager();
         }
 
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -66,11 +67,8 @@ namespace EasyXNA
         protected override void Initialize()
         {
             base.Initialize();
-            screenWidth = defaultScreenWidth;
-            screenHeight = defaultScreenHeight;
-
-            graphics.PreferredBackBufferWidth = screenWidth;
-            graphics.PreferredBackBufferHeight = screenHeight;
+            graphics.PreferredBackBufferWidth = ScreenWidth;
+            graphics.PreferredBackBufferHeight = ScreenHeight;
             graphics.ApplyChanges();
         }
 
@@ -80,8 +78,8 @@ namespace EasyXNA
 
         public World Physics { get { return world; } }
 
-        public int ScreenWidth { get { return screenWidth; } }
-        public int ScreenHeight { get { return screenHeight; } }
+        public virtual int ScreenWidth { get { return screenWidth; } }
+        public virtual int ScreenHeight { get { return screenHeight; } }
 
         public Vector2 GridToVector(int col, int row, int width, int height)
         {
@@ -131,8 +129,8 @@ namespace EasyXNA
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.DarkGray);
-      
-            spriteBatch.Begin(SpriteSortMode.BackToFront,null);
+
+            spriteBatch.Begin(SpriteSortMode.BackToFront, null);
             foreach (GameComponent component in Components)
             {
                 if (component is DrawableGameComponent)
@@ -140,7 +138,7 @@ namespace EasyXNA
                     ((DrawableGameComponent)component).Draw(gameTime);
                 }
             }
-            spriteBatch.End();            
+            spriteBatch.End();
         }
 
         /// <summary>
@@ -178,6 +176,15 @@ namespace EasyXNA
             Components.Add(background);
         }
 
+        public Rectangle AddWalls(  params string[] imageNames)
+        {            
+            int startX = 0;
+            int startY = 0;
+            int rows = 0;
+            int columns = 0;
+            return AddRectangle(startX, startY, rows, columns, imageNames);
+        }
+
         /// <summary>
         /// Adds the image specified in a box-shape, starting at the X and Y values, and building the specified number of rows and columns.
         /// </summary>
@@ -188,6 +195,11 @@ namespace EasyXNA
         /// <param name="imageName">The image to draw</param>
         /// <returns>A Rectangle that represents the "inner bounds" of the box created</returns>
         public Rectangle AddWalls(int startX, int startY, int rows, int columns, params string[] imageNames)
+        {
+            return AddRectangle(startX, startY, rows, columns, imageNames);
+        }
+
+        public Rectangle AddRectangle(int startX, int startY, int rows, int columns, params string[] imageNames)
         {
             EasyGameComponent firstWall = null;
             EasyGameComponent lastWall = null;

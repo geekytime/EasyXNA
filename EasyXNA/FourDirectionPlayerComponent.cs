@@ -23,15 +23,90 @@ namespace EasyXNA
             this.playerIndex = playerIndex;
             base.Acceleration = 6;
             base.MaxVelocity = PlayerGameComponent.DEFAULT_PLAYER_MAX_VELOCITY;
-            base.InputHandler = new InputHandler(playerIndex);
+            base.InputChecker = new DirectionInputChecker(playerIndex);
             base.currentAnimationFrame = 0;            
         }
 
 
         public override void Update(GameTime gameTime)
         {
-            InputHandler.HandleInput(this);           
- 
+            Vector2 inputVector = InputChecker.GetInputVector(Acceleration);
+            SetVelocityBasedOnInputVector(gameTime, inputVector);
+
+
+                SetDirectionBasedOnVelocity(gameTime);
+            base.Update(gameTime);
+        }
+
+        private void SetVelocityBasedOnInputVector(GameTime gameTime, Vector2 inputVector)
+        {
+            Vector2 current = Body.LinearVelocity;
+            SlowDownFastIfDirectionChanges(inputVector);
+            ApplyInputVector(inputVector);
+            MaintainMaxVelocity();
+        }
+
+        private void SlowDownFastIfDirectionChanges(Vector2 inputVector)
+        {
+            Vector2 currentVelocity = Body.LinearVelocity;
+
+            if (currentVelocity.X > 0 && inputVector.X < 0 || inputVector.X == 0)
+            {
+                Body.ApplyLinearImpulse(new Vector2(-currentVelocity.X, 0));
+            }
+
+            if (currentVelocity.X < 0 && inputVector.X > 0 || inputVector.X == 0)
+            {
+                Body.ApplyLinearImpulse(new Vector2(-currentVelocity.X, 0));
+            }
+
+            if (currentVelocity.Y > 0 && inputVector.Y < 0 || inputVector.Y == 0)
+            {
+                Body.ApplyLinearImpulse(new Vector2( 0,-currentVelocity.Y));
+            }
+
+            if (currentVelocity.Y < 0 && inputVector.Y > 0 || inputVector.Y == 0)
+            {
+                Body.ApplyLinearImpulse(new Vector2(0, -currentVelocity.Y));
+            }
+
+            if (Body.LinearVelocity.Length() > 0 && Body.LinearVelocity.Length() < 1)
+            {
+                Body.LinearVelocity = Vector2.Zero;
+            }
+        }
+
+        private void ApplyInputVector(Vector2 inputVector)
+        {
+            Vector2 xPart = new Vector2(inputVector.X, 0);
+            Vector2 yPart = new Vector2(0, inputVector.Y);
+
+            if (Math.Abs(Body.LinearVelocity.X) < MaxVelocity  && xPart.Length() > 0)
+            {
+                Body.ApplyLinearImpulse(xPart);
+            }
+            if (Math.Abs(Body.LinearVelocity.Y) < MaxVelocity && yPart.Length() > 0)
+            {
+                Body.ApplyLinearImpulse(yPart);
+            }
+        }
+
+        private void MaintainMaxVelocity()
+        {
+            if (Math.Abs(Body.LinearVelocity.X) > MaxVelocity)
+            {
+                Vector2 xPart = new Vector2(-Body.LinearVelocity.X, 0);
+                Body.ApplyLinearImpulse(xPart);
+            }
+            if (Math.Abs(Body.LinearVelocity.Y) > MaxVelocity)
+            {
+                Vector2 yPart = new Vector2(0, -Body.LinearVelocity.Y);
+                Body.ApplyLinearImpulse(yPart);
+            }            
+        }
+
+        private void SetDirectionBasedOnVelocity(GameTime gameTime)
+        {
             if (Body.LinearVelocity.Length() > 0)
             {
                 ClickAnimationFrame(gameTime);
@@ -59,7 +134,6 @@ namespace EasyXNA
             {
                 direction = AnimatedGameComponentDirection.Right;
             }
-            base.Update(gameTime);
         }
 
 

@@ -42,12 +42,12 @@
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="DirectionInputChecker.cs" />
     <Compile Include="EasyGameState.cs" />
     <Compile Include="FourDirectionPlayerComponent.cs" />
     <Compile Include="AnimatedGameComponent.cs" />
     <Compile Include="InputHandlerComponent.cs" />
     <Compile Include="LayerDepths.cs" />
-    <Compile Include="Projectile.cs" />
     <Compile Include="ProjectileComponent.cs" />
     <Compile Include="RotatingWanderingComponent.cs" />
     <Compile Include="AnimatedRotatingGameComponent.cs" />
@@ -57,7 +57,6 @@
     <Compile Include="ConvertUnits.cs" />
     <Compile Include="CustomProperties.cs" />
     <Compile Include="EffectGameComponent.cs" />
-    <Compile Include="InputHandler.cs" />
     <Compile Include="PhysicsFrame.cs" />
     <Compile Include="ConsumableGameComponent.cs" />
     <Compile Include="EasyTopDownGame.cs" />

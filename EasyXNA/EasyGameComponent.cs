@@ -22,7 +22,7 @@ namespace EasyXNA
         public Body Body { get; set; }
         Vector2 offset;
 
-        protected InputHandler InputHandler { get; set; }        
+        protected DirectionInputChecker InputChecker { get; set; }        
         public float Scale { get; set; }
         public float LayerDepth { get; set; }
 

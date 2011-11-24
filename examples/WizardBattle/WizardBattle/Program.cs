@@ -12,6 +12,7 @@ namespace WizardBattle
         {
             using (GameLoop game = new GameLoop())
             {
+                
                 game.Run();
             }
         }

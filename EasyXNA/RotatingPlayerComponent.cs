@@ -15,7 +15,7 @@ namespace EasyXNA
             this.playerIndex = playerIndex;
             base.Acceleration = 6;
             base.MaxVelocity = PlayerGameComponent.DEFAULT_PLAYER_MAX_VELOCITY;
-            base.InputHandler = new InputHandler(playerIndex);
+            base.InputChecker = new DirectionInputChecker(playerIndex);
             base.currentAnimationFrame = 0;            
         }
 

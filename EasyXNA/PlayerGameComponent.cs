@@ -10,7 +10,7 @@ namespace EasyXNA
     public class PlayerGameComponent : EasyGameComponent
     {
         public static int DEFAULT_PLAYER_ACCELERATION = 4;
-        public static int DEFAULT_PLAYER_MAX_VELOCITY = 4;
+        public static int DEFAULT_PLAYER_MAX_VELOCITY = 8;
 
         PlayerIndex playerIndex;
         PlayerIndex PlayerIndex
@@ -24,14 +24,14 @@ namespace EasyXNA
             this.playerIndex = playerIndex;
             base.Acceleration = DEFAULT_PLAYER_ACCELERATION;
             base.MaxVelocity = DEFAULT_PLAYER_MAX_VELOCITY;
-            base.InputHandler = new InputHandler(playerIndex);
+            base.InputChecker = new DirectionInputChecker(playerIndex);
             base.Body.FixedRotation = true;
             base.Body.IsStatic = false;
         }
 
         public override void Update(GameTime gameTime)
         {
-            InputHandler.HandleInput(this);
+            Vector2 inputVector = InputChecker.GetInputVector(Acceleration);
             base.Update(gameTime);
         }
 
