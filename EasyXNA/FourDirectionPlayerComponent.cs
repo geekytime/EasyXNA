@@ -21,10 +21,13 @@ namespace EasyXNA
             : base(easyGame, imageName)
         {
             this.playerIndex = playerIndex;
-            base.Acceleration = 6;
-            base.MaxVelocity = PlayerGameComponent.DEFAULT_PLAYER_MAX_VELOCITY;
+            base.Acceleration = 20f;
+            base.MaxVelocity = 2f;
             base.InputChecker = new DirectionInputChecker(playerIndex);
-            base.currentAnimationFrame = 0;            
+            base.currentAnimationFrame = 0;
+            Body.LinearDamping = 30;
+            Body.Mass = 3;
+            Body.Restitution = 0f;
         }
 
 
@@ -34,66 +37,51 @@ namespace EasyXNA
             SetVelocityBasedOnInputVector(gameTime, inputVector);
 
 
-                SetDirectionBasedOnVelocity(gameTime);
+            SetDirectionBasedOnVelocity(gameTime);
             base.Update(gameTime);
         }
 
         private void SetVelocityBasedOnInputVector(GameTime gameTime, Vector2 inputVector)
         {
-            Vector2 current = Body.LinearVelocity;
-            SlowDownFastIfDirectionChanges(inputVector);
+            //SlowDownFastIfDirectionChanges(inputVector);
             ApplyInputVector(inputVector);
-            MaintainMaxVelocity();
+            //MaintainMaxVelocity();
         }
 
         private void SlowDownFastIfDirectionChanges(Vector2 inputVector)
         {
             Vector2 currentVelocity = Body.LinearVelocity;
 
-            if (currentVelocity.X > 0 && inputVector.X < 0 || inputVector.X == 0)
+            if ( inputVector.X == 0 || (currentVelocity.X > 0 && inputVector.X < 0))
             {
                 Body.ApplyLinearImpulse(new Vector2(-currentVelocity.X, 0));
             }
 
-            if (currentVelocity.X < 0 && inputVector.X > 0 || inputVector.X == 0)
+            if ( inputVector.X == 0 || (currentVelocity.X < 0 && inputVector.X > 0) )
             {
                 Body.ApplyLinearImpulse(new Vector2(-currentVelocity.X, 0));
             }
 
-            if (currentVelocity.Y > 0 && inputVector.Y < 0 || inputVector.Y == 0)
+            if (inputVector.Y == 0 || (currentVelocity.Y > 0 && inputVector.Y < 0))
             {
                 Body.ApplyLinearImpulse(new Vector2( 0,-currentVelocity.Y));
             }
 
-            if (currentVelocity.Y < 0 && inputVector.Y > 0 || inputVector.Y == 0)
+            if (inputVector.Y == 0|| (currentVelocity.Y < 0 && inputVector.Y > 0) )
             {
                 Body.ApplyLinearImpulse(new Vector2(0, -currentVelocity.Y));
             }
 
-            if (Body.LinearVelocity.Length() > 0 && Body.LinearVelocity.Length() < 1)
-            {
-                Body.LinearVelocity = Vector2.Zero;
-            }
         }
 
         private void ApplyInputVector(Vector2 inputVector)
-        {
-            Vector2 xPart = new Vector2(inputVector.X, 0);
-            Vector2 yPart = new Vector2(0, inputVector.Y);
-
-            if (Math.Abs(Body.LinearVelocity.X) < MaxVelocity  && xPart.Length() > 0)
-            {
-                Body.ApplyLinearImpulse(xPart);
-            }
-            if (Math.Abs(Body.LinearVelocity.Y) < MaxVelocity && yPart.Length() > 0)
-            {
-                Body.ApplyLinearImpulse(yPart);
-            }
+        {            
+            Body.ApplyLinearImpulse(inputVector);
         }
 
         private void MaintainMaxVelocity()
         {
-            if (Math.Abs(Body.LinearVelocity.X) > MaxVelocity)
+            if (Body.LinearVelocity.X > MaxVelocity)
             {
                 Vector2 xPart = new Vector2(-Body.LinearVelocity.X, 0);
                 Body.ApplyLinearImpulse(xPart);
@@ -107,7 +95,7 @@ namespace EasyXNA
 
         private void SetDirectionBasedOnVelocity(GameTime gameTime)
         {
-            if (Body.LinearVelocity.Length() > 0)
+            if (Body.LinearVelocity.Length() > 1)
             {
                 ClickAnimationFrame(gameTime);
                 lastDirection = direction;

@@ -41,13 +41,11 @@ namespace EasyXNA
             Body.BodyType = BodyType.Dynamic;
             Body.FixedRotation = true;
             frames = new List<PhysicsFrame>();
-            for (int i = 0; i < spriteSheet.Count; i++)
-            {
-                PhysicsFrame frame = PhysicsHelper.GetVerticesForTexture(spriteSheet, i);
-                List<Fixture> fixtures = FixtureFactory.AttachCompoundPolygon(frame.Vertices, 1f, Body);
-                frame.Fixtures = fixtures;
-                frames.Add(frame);
-            }
+
+            PhysicsFrame frame = PhysicsHelper.GetVerticesForTexture(spriteSheet, 0);
+            List<Fixture> fixtures = FixtureFactory.AttachCompoundPolygon(frame.Vertices, 1f, Body);
+            frame.Fixtures = fixtures;
+            frames.Add(frame);
             PhysicsHelper.AttachOnCollisionHandlers(Body, game);
         }
 
@@ -91,7 +89,7 @@ namespace EasyXNA
         protected PhysicsFrame getCurrentPhysicsFrame()
         {
             int index = GetCurrentFrameIndex();
-            PhysicsFrame currentFrame = frames[index];
+            PhysicsFrame currentFrame = frames[0];
             return currentFrame;
         }
 
@@ -125,16 +123,16 @@ namespace EasyXNA
 
         private void updateEnabledFixtures()
         {
-            int index = GetCurrentSpriteSheetIndex();
-            if (index != lastIndex)
-            {
-                if (lastIndex != -1)
-                {
-                    frames[lastIndex].DisableFixtures();
-                }
-                frames[index].EnableFixtures();
-                lastIndex = index;
-            }
+            //int index = GetCurrentSpriteSheetIndex();
+            //if (index != lastIndex)
+            //{
+            //    if (lastIndex != -1)
+            //    {
+            //        frames[lastIndex].DisableFixtures();
+            //    }
+            //    frames[index].EnableFixtures();
+            //    lastIndex = index;
+            //}
         }
 
         public override int Width

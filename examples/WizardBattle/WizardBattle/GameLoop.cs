@@ -47,7 +47,7 @@ namespace WizardBattle
 
             display2 = AddPlayerScoreDisplay(PlayerIndex.Two, "segoe");
             display2.SetPosition(420, 15);
-          
+
             AddMonsters("blob", 2);
             AddMonsters("ghost", 2);
             AddMonsters("ogre", 2);
@@ -62,7 +62,7 @@ namespace WizardBattle
             AddInputHandler(PlayerOneFireball, PlayerIndex.One, Keys.RightControl, Buttons.A);
             AddInputHandler(PlayerTwoFireball, PlayerIndex.Two, Keys.LeftControl, Buttons.A);
 
-            AddCollisionHandler("magicball", "brick", FireballBrickCollision);
+            //AddCollisionHandler("magicball", "brick", FireballBrickCollision);
             AddCollisionHandler("magicball", "monster", FireballMonsterCollision);
             AddCollisionHandler("wizard", "monster", WizardMonsterCollision);            
         }
@@ -85,7 +85,8 @@ namespace WizardBattle
 
         public void PlayerOneFireball()
         {
-            AddProjectile(wizard1, "magicball", 1);
+            ProjectileComponent magicball = AddProjectile(wizard1, "magicball", 1);
+            magicball.Body.Restitution = .8f;
         }
 
         public void PlayerTwoFireball()
