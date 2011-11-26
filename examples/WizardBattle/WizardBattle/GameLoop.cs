@@ -122,7 +122,8 @@ namespace WizardBattle
         {
             wizard.Remove();
             AddEffect("colorexplosion", wizard.DisplayPosition);
-            TextEffect textEffect = AddTextEffect("segoe", "U R D3@D!!!", wizard.DisplayPosition, Color.Red);
+            String message = RandomHelper.PickOne("OUCH", "DEAD", "RIP", "BYE");
+            TextEffect textEffect = AddTextEffect("segoe", message, wizard.DisplayPosition, Color.Red);
             textEffect.SecondsToLive = 1;
             textEffect.MakeFlashingText(Color.WhiteSmoke, .05);
             AddTimedEvent(3, AddWizard1, 1);
