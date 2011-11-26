@@ -62,6 +62,7 @@
     <Compile Include="EasyTopDownGame.cs" />
     <Compile Include="EasyGameComponent.cs" />
     <Compile Include="PhysicsHelper.cs" />
+    <Compile Include="ScreenHelper.cs" />
     <Compile Include="TextEffect.cs" />
     <Compile Include="PlayerScoreDisplay.cs" />
     <Compile Include="RandomHelper.cs" />

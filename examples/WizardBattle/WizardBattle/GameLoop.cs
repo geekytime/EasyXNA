@@ -27,13 +27,9 @@ namespace WizardBattle
         Rectangle viewableArea;
         int newMonsterCount = 0;
 
-        public override int ScreenHeight { get { return 720; } }
-
-        public override int ScreenWidth { get { return 1280; } }
-
         public override void Setup()
         {            
-            viewableArea = AddWalls(16, 48, 27,43, "brick");
+            viewableArea = AddWalls("brick");
 
             AddWizard1();
 
@@ -42,7 +38,7 @@ namespace WizardBattle
 
             wizard2 = AddFourDirectionPlayer(PlayerIndex.Two, "wizard");
             wizard2.Category = "wizard2";
-            wizard2.SetPosition(600, 300);
+            wizard2.DisplayPosition = ScreenHelper.CenterRightQuarter;
             wizard2.OverlayColor = Color.Orange;
 
             display2 = AddPlayerScoreDisplay(PlayerIndex.Two, "segoe");
@@ -62,7 +58,7 @@ namespace WizardBattle
             AddInputHandler(PlayerOneFireball, PlayerIndex.One, Keys.RightControl, Buttons.A);
             AddInputHandler(PlayerTwoFireball, PlayerIndex.Two, Keys.LeftControl, Buttons.A);
 
-            //AddCollisionHandler("magicball", "brick", FireballBrickCollision);
+            AddCollisionHandler("magicball", "brick", FireballBrickCollision);
             AddCollisionHandler("magicball", "monster", FireballMonsterCollision);
             AddCollisionHandler("wizard", "monster", WizardMonsterCollision);            
         }
@@ -70,7 +66,7 @@ namespace WizardBattle
         public void AddWizard1()
         {
             wizard1 = AddFourDirectionPlayer(PlayerIndex.One, "wizard");
-            wizard1.SetPosition(100, 300);
+            wizard1.DisplayPosition = ScreenHelper.CenterLeftQuarter;
         }
 
         public void AddRandomMonster()
@@ -85,8 +81,12 @@ namespace WizardBattle
 
         public void PlayerOneFireball()
         {
-            ProjectileComponent magicball = AddProjectile(wizard1, "magicball", 1);
-            magicball.Body.Restitution = .8f;
+            if (wizard1.IsRemoved == false)
+            {
+                ProjectileComponent magicball = AddProjectile(wizard1, "magicball", 1);
+                magicball.Body.Restitution = .8f;
+                magicball.OverlayColor = Color.Violet;
+            }
         }
 
         public void PlayerTwoFireball()

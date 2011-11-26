@@ -21,13 +21,15 @@ namespace EasyXNA
         /// </summary>
         public abstract void Setup();
 
+        public ScreenHelper ScreenHelper;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         World world;
         int gridSize = 16;
 
-        const int defaultScreenWidth = 704;
-        const int defaultScreenHeight = 480;
+        const int defaultScreenWidth = 1280;
+        const int defaultScreenHeight = 720;
 
         int screenWidth = defaultScreenWidth;
         int screenHeight = defaultScreenHeight;
@@ -66,10 +68,15 @@ namespace EasyXNA
         /// </summary>
         protected override void Initialize()
         {
+            this.ScreenHelper = new ScreenHelper(this.GraphicsDevice.DisplayMode.TitleSafeArea);
+
             base.Initialize();
+            
             graphics.PreferredBackBufferWidth = ScreenWidth;
             graphics.PreferredBackBufferHeight = ScreenHeight;
             graphics.ApplyChanges();
+
+            
         }
 
         public int RowCount { get { return screenHeight / gridSize; } }
@@ -176,12 +183,16 @@ namespace EasyXNA
             Components.Add(background);
         }
 
-        public Rectangle AddWalls(  params string[] imageNames)
-        {            
-            int startX = 0;
-            int startY = 0;
-            int rows = 0;
-            int columns = 0;
+        public Rectangle AddWalls(params string[] imageNames)
+        {
+            Rectangle tsa = this.GraphicsDevice.DisplayMode.TitleSafeArea;            
+            Texture2D wall = Content.Load<Texture2D>(imageNames[0]);            
+            int columns = tsa.Width  / wall.Width;
+            int rows = tsa.Height / wall.Height;
+            int xOffset = (tsa.Width - (columns * wall.Width)) / 2;
+            int yOffset = (tsa.Height - (rows * wall.Height)) / 2;
+            int startX = tsa.Left + xOffset;
+            int startY = tsa.Top + yOffset;
             return AddRectangle(startX, startY, rows, columns, imageNames);
         }
 

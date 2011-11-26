@@ -95,36 +95,45 @@ namespace EasyXNA
 
         private void SetDirectionBasedOnVelocity(GameTime gameTime)
         {
-            if (Body.LinearVelocity.Length() > 1)
+            if (Body.LinearVelocity.Length() > 0)
             {
                 ClickAnimationFrame(gameTime);
                 lastDirection = direction;
             }
 
-            if (Body.LinearVelocity.X == 0)
+
+            if (Body.LinearVelocity.Y < 0 && YIsGreaterThanX(Body.LinearVelocity))
             {
-                if (Body.LinearVelocity.Y < 0)
-                {
-                    direction = AnimatedGameComponentDirection.Back;
-                }
-                else if (Body.LinearVelocity.Y > 0)
-                {
-                    {
-                        direction = AnimatedGameComponentDirection.Front;
-                    }
-                }
+                direction = AnimatedGameComponentDirection.Back;
+                return;
             }
-            else if (Body.LinearVelocity.X < 0)
+
+            if (Body.LinearVelocity.Y > 0 && YIsGreaterThanX(Body.LinearVelocity))
+            {
+                direction = AnimatedGameComponentDirection.Front;
+                return;
+            }
+
+
+            if (Body.LinearVelocity.X < 0)
             {
                 direction = AnimatedGameComponentDirection.Left;
             }
-            else
+            else if (Body.LinearVelocity.X > 0)
             {
                 direction = AnimatedGameComponentDirection.Right;
             }
         }
 
-
+        protected bool YIsGreaterThanX(Vector2 vector2)
+        {
+            if (Math.Abs(vector2.Y) > Math.Abs(vector2.X))
+            {
+                return true;
+            }
+            return false;
+        }
+        
         protected override String BuildActiveSpriteSuffix()
         {
             return direction.ToString().ToLower() + "-" + currentAnimationFrame.ToString();
