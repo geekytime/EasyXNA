@@ -29,12 +29,12 @@ namespace WizardBattle
 
         public override void Setup()
         {            
-            viewableArea = AddWalls("brick");
+            viewableArea = AddWalls(0,16, "brick");
 
             AddWizard1();
 
             display1 = AddPlayerScoreDisplay(PlayerIndex.One, "segoe");
-            display1.SetPosition(20, 15);
+            display1.Position = ScreenHelper.TopLeftQuarter;
 
             wizard2 = AddFourDirectionPlayer(PlayerIndex.Two, "wizard");
             wizard2.Category = "wizard2";
@@ -42,7 +42,7 @@ namespace WizardBattle
             wizard2.OverlayColor = Color.Orange;
 
             display2 = AddPlayerScoreDisplay(PlayerIndex.Two, "segoe");
-            display2.SetPosition(420, 15);
+            display2.Position = ScreenHelper.TopRightQuarter;
 
             AddMonsters("blob", 2);
             AddMonsters("ghost", 2);

@@ -26,8 +26,8 @@ namespace EasyXNA
         {
             base.Draw(gameTime);
             String displayData = Name + " : " + Score.ToString();
-            Vector2 FontOrigin = spriteFont.MeasureString(displayData) / 2;            
-            game.SpriteBatch.DrawString(spriteFont, displayData, Position, FontColor, 0, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth);            
+            Vector2 FontOrigin = spriteFont.MeasureString(displayData) / 2;
+            game.SpriteBatch.DrawString(spriteFont, displayData, Position, FontColor, 0, FontOrigin, Scale, SpriteEffects.None, LayerDepth);            
         }
     }
 }

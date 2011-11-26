@@ -185,9 +185,19 @@ namespace EasyXNA
 
         public Rectangle AddWalls(params string[] imageNames)
         {
-            Rectangle tsa = this.GraphicsDevice.DisplayMode.TitleSafeArea;            
-            Texture2D wall = Content.Load<Texture2D>(imageNames[0]);            
-            int columns = tsa.Width  / wall.Width;
+            return AddWalls(0, 0, imageNames);
+        }
+
+        public Rectangle AddWalls(int xPaddingLeft, int yPaddingTop, params string[] imageNames)
+        {
+            Rectangle tsa = this.GraphicsDevice.DisplayMode.TitleSafeArea;
+            tsa.Width = tsa.Width - xPaddingLeft;
+            tsa.Height = tsa.Height - yPaddingTop;
+            tsa.X = tsa.X + xPaddingLeft;
+            tsa.Y = tsa.Y + yPaddingTop;
+
+            Texture2D wall = Content.Load<Texture2D>(imageNames[0]);
+            int columns = tsa.Width / wall.Width;
             int rows = tsa.Height / wall.Height;
             int xOffset = (tsa.Width - (columns * wall.Width)) / 2;
             int yOffset = (tsa.Height - (rows * wall.Height)) / 2;

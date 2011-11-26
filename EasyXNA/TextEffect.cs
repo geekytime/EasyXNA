@@ -93,8 +93,8 @@ namespace EasyXNA
             Color currentColor = GetCurrentColor(gameTime);
 
             base.Draw(gameTime);            
-            Vector2 FontOrigin = spriteFont.MeasureString(Message) / 2;            
-            game.SpriteBatch.DrawString(spriteFont, Message, Position, currentColor, 0, FontOrigin, Scale, SpriteEffects.None, LayerDepth);            
+            Vector2 fontOrigin = spriteFont.MeasureString(Message)/2;            
+            game.SpriteBatch.DrawString(spriteFont, Message, Position, currentColor, 0, -fontOrigin, Scale, SpriteEffects.None, LayerDepth);            
         }
 
         public void MakeFlashingText(Color flashColor, double flashInterval)
