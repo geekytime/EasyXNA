@@ -21,7 +21,7 @@ namespace EasyXNA
             : base(easyGame, imageName)
         {
             this.playerIndex = playerIndex;
-            base.Acceleration = 20f;
+            Acceleration = 20f;
             base.MaxVelocity = 2f;
             base.InputChecker = new DirectionInputChecker(playerIndex);
             base.currentAnimationFrame = 0;

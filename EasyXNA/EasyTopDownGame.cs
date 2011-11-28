@@ -28,8 +28,8 @@ namespace EasyXNA
         World world;
         int gridSize = 16;
 
-        const int defaultScreenWidth = 1280;
-        const int defaultScreenHeight = 720;
+        const int defaultScreenWidth =1920 ;
+        const int defaultScreenHeight = 1080;
 
         int screenWidth = defaultScreenWidth;
         int screenHeight = defaultScreenHeight;

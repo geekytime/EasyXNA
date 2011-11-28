@@ -71,12 +71,9 @@ namespace WizardBattle
 
         public void AddRandomMonster()
         {
-            if (newMonsterCount < 2)
-            {
                 newMonsterCount++;
                 string monsterName = RandomHelper.PickOne("blob", "ghost", "ogre");
                 AddMonsters(monsterName, newMonsterCount);
-            }
         }
 
         public void PlayerOneFireball()
