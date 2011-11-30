@@ -31,9 +31,6 @@ namespace EasyXNA
         const int defaultScreenWidth =1920 ;
         const int defaultScreenHeight = 1080;
 
-        int screenWidth = defaultScreenWidth;
-        int screenHeight = defaultScreenHeight;
-
         /// <summary>
         /// Gets the SpriteBatch used to draw images
         /// </summary>
@@ -71,22 +68,13 @@ namespace EasyXNA
             this.ScreenHelper = new ScreenHelper(this.GraphicsDevice.DisplayMode.TitleSafeArea);
 
             base.Initialize();
-            
-            graphics.PreferredBackBufferWidth = ScreenWidth;
-            graphics.PreferredBackBufferHeight = ScreenHeight;
-            graphics.ApplyChanges();
 
-            
+            graphics.PreferredBackBufferWidth = defaultScreenWidth;
+            graphics.PreferredBackBufferHeight = defaultScreenHeight;
+            graphics.ApplyChanges();
         }
 
-        public int RowCount { get { return screenHeight / gridSize; } }
-
-        public int ColCount { get { return screenWidth / gridSize; } }
-
         public World Physics { get { return world; } }
-
-        public virtual int ScreenWidth { get { return screenWidth; } }
-        public virtual int ScreenHeight { get { return screenHeight; } }
 
         public Vector2 GridToVector(int col, int row, int width, int height)
         {
