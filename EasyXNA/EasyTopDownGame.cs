@@ -28,8 +28,8 @@ namespace EasyXNA
         World world;
         int gridSize = 16;
 
-        const int defaultScreenWidth =1920 ;
-        const int defaultScreenHeight = 1080;
+        const int defaultScreenWidth =1600 ;
+        const int defaultScreenHeight = 900;
 
         /// <summary>
         /// Gets the SpriteBatch used to draw images

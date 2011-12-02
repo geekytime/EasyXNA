@@ -35,10 +35,24 @@ namespace EasyXNA
         public override void Update(GameTime gameTime)
         {
             Vector2 inputVector = InputChecker.GetInputVector(Acceleration);
-            Body.ApplyLinearImpulse(inputVector);
+            Vector2 adjustedVector = ApplyMovementRules(inputVector);
+
+            Body.ApplyLinearImpulse(adjustedVector);
             base.Update(gameTime);
         }
 
- 
+        protected Vector2 ApplyMovementRules(Vector2 inputVector)
+        {
+            Vector2 adjustedVector = new Vector2(0, 0) ;
+            if (AllowHorizontalMovement == false)
+            {
+                adjustedVector = new Vector2(0, inputVector.Y);
+            }
+            if (AllowVerticalMovement == false)
+            {
+                adjustedVector = new Vector2(inputVector.X, 0);
+            }
+            return adjustedVector;
+        }
     }
 }

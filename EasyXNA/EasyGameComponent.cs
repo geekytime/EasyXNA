@@ -29,6 +29,59 @@ namespace EasyXNA
         protected EasyTopDownGame game;
         protected String imageName;
 
+        public float BounceFactor
+        {
+            get
+            {
+                return Body.Restitution;
+            }
+            set
+            {
+                Body.Restitution = value;
+            }
+        }
+
+        public float EdgeFriction
+        {
+            get
+            {
+                return Body.Friction;
+            }
+            set
+            {
+                Body.Friction = value;
+            }
+        }
+
+        public bool Rotateable
+        {
+            get
+            {
+                return !(Body.FixedRotation);
+            }
+            set
+            {
+                Body.FixedRotation = !(value);
+            }
+        }
+
+        public bool IsBullet
+        {
+            get
+            {
+                return Body.IsBullet;
+            }
+            set
+            {
+                Body.IsBullet = value;             
+            }
+        }
+
+        public void Nudge(float x, float y)
+        {
+            Body.ApplyLinearImpulse(new Vector2(x, y));
+        }
+
         /// <summary>
         /// Specifies what "kind" of component this is.  This value is used to handle collisions between object Categories.
         /// </summary>
@@ -132,6 +185,8 @@ namespace EasyXNA
         /// </summary>        
         public float Acceleration { get; set; }
         public float MaxVelocity { get; set; }
+        public float ConstantVelocity { get; set; }
+        
 
         public Rectangle GetBoundingBox()
         {
@@ -188,8 +243,18 @@ namespace EasyXNA
             FixtureFactory.AttachCompoundPolygon(easyVertices.Vertices, 1f, Body);
             offset = easyVertices.Offset;
 
+            Body.Mass = 1f;
+
             PhysicsHelper.AttachOnCollisionHandlers(Body, game);
         }
+
+        public float Mass
+        {
+            get { return Body.Mass; }
+            set { Body.Mass = value; }
+        }
+
+        
 
         /// <summary>
         /// Grabs the SpriteBatch for this game, and draws this components sprite to the screen.
@@ -237,6 +302,31 @@ namespace EasyXNA
                 this.Body.CollidesWith = FarseerPhysics.Dynamics.Category.None;
                 this.game.Physics.RemoveBody(this.Body);
                 IsRemoved = true;
+            }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            EnforceConstantVelocity();
+        }
+
+        private void EnforceConstantVelocity()
+        {
+            if (ConstantVelocity > 0)
+            {
+                Vector2 adjustmentVector = Vector2.Zero;
+                if (Body.LinearVelocity.Length() > ConstantVelocity)
+                {
+                    adjustmentVector = -Body.LinearVelocity * .1f;
+                }
+                else if (Body.LinearVelocity.Length() < ConstantVelocity)
+                {
+                    adjustmentVector = Body.LinearVelocity * .1f;
+                }
+                if (adjustmentVector.X != 0 || adjustmentVector.Y != 0)
+                {
+                    Body.ApplyLinearImpulse(adjustmentVector);
+                }
             }
         }
 

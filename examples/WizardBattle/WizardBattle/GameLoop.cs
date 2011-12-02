@@ -55,7 +55,7 @@ namespace WizardBattle
             AddCollisionHandler("wizard", "ruby", WizardRubyCollision);
             AddBackgroundImage("tile", viewableArea);
 
-            AddInputHandler(PlayerOneFireball, PlayerIndex.One, Keys.RightControl, Buttons.A);
+            AddInputHandler(PlayerOneFireball, PlayerIndex.One, Keys.RightControl, Buttons.A, Keys.Space);
             AddInputHandler(PlayerTwoFireball, PlayerIndex.Two, Keys.LeftControl, Buttons.A);
 
             AddCollisionHandler("magicball", "brick", FireballBrickCollision);

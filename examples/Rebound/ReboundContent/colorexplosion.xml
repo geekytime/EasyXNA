@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <Asset Type="System.String[]">
+    <Item>colorexplosion/colorexplosion-0.png</Item>
+    <Item>colorexplosion/colorexplosion-1.png</Item>
+    <Item>colorexplosion/colorexplosion-2.png</Item>
+    <Item>colorexplosion/colorexplosion-3.png</Item>
+    <Item>colorexplosion/colorexplosion-4.png</Item>
+    <Item>colorexplosion/colorexplosion-5.png</Item>
+  </Asset>
+</XnaContent>
