@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace EasyXNA
 {
@@ -24,6 +25,17 @@ namespace EasyXNA
         {
             int index = IntInRange(0, items.Length - 1);
             return items[index];
+        }
+
+        public static Color Color()
+        {
+            int red = IntInRange(0,255);
+            int green = IntInRange(0,255);
+            int blue = IntInRange(0,255);
+            int alpha = IntInRange(0,255);
+
+
+            return new Color(red, green, blue, alpha);
         }
 
     }

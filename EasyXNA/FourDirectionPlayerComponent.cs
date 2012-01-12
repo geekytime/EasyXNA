@@ -35,91 +35,44 @@ namespace EasyXNA
         {
             Vector2 inputVector = InputChecker.GetInputVector(Acceleration);
             SetVelocityBasedOnInputVector(gameTime, inputVector);
-
-
-            SetDirectionBasedOnVelocity(gameTime);
+            UpdateAnimationFrame(gameTime);
+            SetDirectionBasedOnInputVector(inputVector);
             base.Update(gameTime);
         }
 
-        private void SetVelocityBasedOnInputVector(GameTime gameTime, Vector2 inputVector)
+        private void UpdateAnimationFrame(GameTime gameTime)
         {
-            //SlowDownFastIfDirectionChanges(inputVector);
-            ApplyInputVector(inputVector);
-            //MaintainMaxVelocity();
-        }
-
-        private void SlowDownFastIfDirectionChanges(Vector2 inputVector)
-        {
-            Vector2 currentVelocity = Body.LinearVelocity;
-
-            if ( inputVector.X == 0 || (currentVelocity.X > 0 && inputVector.X < 0))
-            {
-                Body.ApplyLinearImpulse(new Vector2(-currentVelocity.X, 0));
-            }
-
-            if ( inputVector.X == 0 || (currentVelocity.X < 0 && inputVector.X > 0) )
-            {
-                Body.ApplyLinearImpulse(new Vector2(-currentVelocity.X, 0));
-            }
-
-            if (inputVector.Y == 0 || (currentVelocity.Y > 0 && inputVector.Y < 0))
-            {
-                Body.ApplyLinearImpulse(new Vector2( 0,-currentVelocity.Y));
-            }
-
-            if (inputVector.Y == 0|| (currentVelocity.Y < 0 && inputVector.Y > 0) )
-            {
-                Body.ApplyLinearImpulse(new Vector2(0, -currentVelocity.Y));
-            }
-
-        }
-
-        private void ApplyInputVector(Vector2 inputVector)
-        {            
-            Body.ApplyLinearImpulse(inputVector);
-        }
-
-        private void MaintainMaxVelocity()
-        {
-            if (Body.LinearVelocity.X > MaxVelocity)
-            {
-                Vector2 xPart = new Vector2(-Body.LinearVelocity.X, 0);
-                Body.ApplyLinearImpulse(xPart);
-            }
-            if (Math.Abs(Body.LinearVelocity.Y) > MaxVelocity)
-            {
-                Vector2 yPart = new Vector2(0, -Body.LinearVelocity.Y);
-                Body.ApplyLinearImpulse(yPart);
-            }            
-        }
-
-        private void SetDirectionBasedOnVelocity(GameTime gameTime)
-        {
-            if (Body.LinearVelocity.Length() > 0)
+            if (Body.LinearVelocity.Length() > .1)
             {
                 ClickAnimationFrame(gameTime);
                 lastDirection = direction;
             }
+        }
 
+        private void SetVelocityBasedOnInputVector(GameTime gameTime, Vector2 inputVector)
+        {
+            Body.ApplyLinearImpulse(inputVector);
+        }
 
-            if (Body.LinearVelocity.Y < 0 && YIsGreaterThanX(Body.LinearVelocity))
+        private void SetDirectionBasedOnInputVector(Vector2 inputVector)
+        {
+            if (inputVector.Y < 0 && YIsGreaterThanX(inputVector))
             {
                 direction = AnimatedGameComponentDirection.Back;
                 return;
             }
 
-            if (Body.LinearVelocity.Y > 0 && YIsGreaterThanX(Body.LinearVelocity))
+            if (inputVector.Y > 0 && YIsGreaterThanX(inputVector))
             {
                 direction = AnimatedGameComponentDirection.Front;
                 return;
             }
 
-
-            if (Body.LinearVelocity.X < 0)
+            if (inputVector.X < 0)
             {
                 direction = AnimatedGameComponentDirection.Left;
             }
-            else if (Body.LinearVelocity.X > 0)
+            else if (inputVector.X > 0)
             {
                 direction = AnimatedGameComponentDirection.Right;
             }
