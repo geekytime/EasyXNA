@@ -26,13 +26,11 @@ namespace EasyXNA
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         World world;
-        int gridSize = 16;
 
-        const int defaultScreenWidth =1920 ;
-        const int defaultScreenHeight = 1080;
+        const int defaultScreenWidth = 1280;
+        const int defaultScreenHeight = 720;
 
-        int screenWidth = defaultScreenWidth;
-        int screenHeight = defaultScreenHeight;
+        private Matrix spriteScale = Matrix.CreateScale(1, 1, 1);
 
         /// <summary>
         /// Gets the SpriteBatch used to draw images
@@ -52,6 +50,9 @@ namespace EasyXNA
         /// </summary>
         public EasyTopDownGame()
         {
+            this.ScreenWidth = defaultScreenWidth;
+            this.ScreenHeight = defaultScreenHeight;
+
             this.TargetElapsedTime = TimeSpan.FromSeconds(1 / 60f);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -67,33 +68,18 @@ namespace EasyXNA
         /// and initialize them as well.
         /// </summary>
         protected override void Initialize()
-        {
-            this.ScreenHelper = new ScreenHelper(this.GraphicsDevice.DisplayMode.TitleSafeArea);
-
-            base.Initialize();
-            
+        {                       
             graphics.PreferredBackBufferWidth = ScreenWidth;
             graphics.PreferredBackBufferHeight = ScreenHeight;
-            graphics.ApplyChanges();
+            graphics.ApplyChanges();            
 
-            
+            base.Initialize();
         }
-
-        public int RowCount { get { return screenHeight / gridSize; } }
-
-        public int ColCount { get { return screenWidth / gridSize; } }
 
         public World Physics { get { return world; } }
 
-        public virtual int ScreenWidth { get { return screenWidth; } }
-        public virtual int ScreenHeight { get { return screenHeight; } }
-
-        public Vector2 GridToVector(int col, int row, int width, int height)
-        {
-            int x = col * gridSize + width / 2;
-            int y = row * gridSize + height / 2;
-            return new Vector2(x, y);
-        }
+        public virtual int ScreenWidth { get; set; }
+        public virtual int ScreenHeight { get; set; }
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -101,9 +87,17 @@ namespace EasyXNA
         /// </summary>
         protected override void LoadContent()
         {
+            //Create the ScreenHelper, which does all of the math for finding screen locations
+            this.ScreenHelper = new ScreenHelper(TitleSafeArea);
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            float xScale = GraphicsDevice.Viewport.Width / ScreenWidth;
+            float yScale = GraphicsDevice.Viewport.Height / ScreenHeight;
+
+            this.spriteScale = Matrix.CreateScale(xScale, yScale, 1);
+            
             //Load other content AFTER we create the sprite batch...
             base.LoadContent();
             Setup();
@@ -137,7 +131,7 @@ namespace EasyXNA
         {
             GraphicsDevice.Clear(Color.DarkGray);
 
-            spriteBatch.Begin(SpriteSortMode.BackToFront, null);
+            spriteBatch.Begin(SpriteSortMode.BackToFront, null, null, null, null, null, this.spriteScale);
             foreach (GameComponent component in Components)
             {
                 if (component is DrawableGameComponent)
@@ -190,7 +184,7 @@ namespace EasyXNA
 
         public Rectangle AddWalls(int xPaddingLeft, int yPaddingTop, params string[] imageNames)
         {
-            Rectangle tsa = this.GraphicsDevice.DisplayMode.TitleSafeArea;
+            Rectangle tsa = TitleSafeArea;
             tsa.Width = tsa.Width - xPaddingLeft;
             tsa.Height = tsa.Height - yPaddingTop;
             tsa.X = tsa.X + xPaddingLeft;
@@ -204,6 +198,22 @@ namespace EasyXNA
             int startX = tsa.Left + xOffset;
             int startY = tsa.Top + yOffset;
             return AddRectangle(startX, startY, rows, columns, imageNames);
+        }
+
+        public Rectangle TitleSafeArea
+        {
+            get
+            {
+                Rectangle tsa = this.GraphicsDevice.Viewport.TitleSafeArea;
+#if WINDOWS
+                tsa.X = tsa.X + 8;
+                tsa.Y = tsa.Y + 8;
+                tsa.Width = tsa.Width - 16;
+                tsa.Height = tsa.Height - 16;
+#endif
+                
+                return tsa;
+            }
         }
 
         /// <summary>

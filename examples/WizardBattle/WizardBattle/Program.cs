@@ -12,7 +12,8 @@ namespace WizardBattle
         {
             using (GameLoop game = new GameLoop())
             {
-                
+                //game.ScreenWidth = 1920;
+                //game.ScreenHeight = 1080;
                 game.Run();
             }
         }

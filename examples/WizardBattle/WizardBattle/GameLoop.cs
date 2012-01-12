@@ -29,7 +29,7 @@ namespace WizardBattle
 
         public override void Setup()
         {            
-            viewableArea = AddWalls(0,16, "brick");
+            viewableArea = AddWalls(0,24, "brick");
 
             AddWizard1();
 
